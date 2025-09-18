@@ -2,27 +2,18 @@
 <html>
 <head><title>9132</title></head>
 <body>
-  <script>
-    console.log("Starting test of CVE‑2025‑9132");
-    // Pseudocode: attempt to cause OOB write
-    // e.g., create a TypedArray, perform some mis‑indexed write,
-    // use WebAssembly to extend bounds, etc.
+<script>
+  console.log("=== PoC page loaded ===");
+  try {
+    // Your exploit logic
+    console.log("Attempting OOB write");
+    let arr = new Uint8Array(4);
+    arr[100] = 123;  // Clearly out-of-bounds
+    console.log("Write complete");
+  } catch (e) {
+    console.log("Caught error:", e.message);
+  }
+</script>
 
-    // Example (not known working PoC)
-    let buffer = new ArrayBuffer(16);
-    let view = new Uint8Array(buffer);
-    // Intentionally out‑of‑bounds index
-    view[100] = 0xFF;
-    console.log("Write attempted to out‑of‑bounds index, see what happens");
-
-    // Try more complex approach with WebAssembly
-    const wasmCode = new Uint8Array([
-      // minimal wasm binary
-    ]);
-    WebAssembly.instantiate(wasmCode).then(obj => {
-      console.log("WASM loaded");
-      // perhaps use compiled functions to manipulate memory
-    }).catch(e => console.log("WASM load error: " + e));
-  </script>
 </body>
 </html>
