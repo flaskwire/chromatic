@@ -1,70 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>POC</title>
+  <meta charset="UTF-8">
+  <title>iOS URL Scheme Tester</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      padding: 20px;
+    }
+    a {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 16px;
+      color: #007aff;
+    }
+  </style>
 </head>
 <body>
-  <h1>Testing CVE‑2025‑5419</h1>
-  <pre id="status">Starting test...</pre>
+  <h1>iOS URL Scheme Tester</h1>
 
-  <script>
-    const status = document.getElementById('status');
-    function log(msg) {
-      console.log(msg);
-      status.textContent += "\n" + msg;
-    }
+  <!-- Core system schemes -->
+  <a href="tel://1234567890">📞 tel://1234567890</a>
+  <a href="sms://1234567890">💬 sms://1234567890</a>
+  <a href="sms://?&body=HelloWorld">💬 sms:// with body</a>
+  <a href="mailto:test@example.com">✉️ mailto://test@example.com</a>
+  <a href="facetime://1234567890">🎥 facetime://</a>
+  <a href="facetime-audio://1234567890">🎧 facetime-audio://</a>
 
-    function tryJsOob() {
-      log("Attempting JS typed array OOB test");
-      try {
-        const buf = new ArrayBuffer(8);
-        const arr8 = new Uint8Array(buf);
-        // Very out‑of‑bounds write
-        arr8[1000] = 42;
-        log("JS OOB write attempted without exception");
-      } catch (e) {
-        log("Caught JS error: " + e.message);
-      }
-    }
+  <!-- Obscure / lesser known -->
+  <a href="shoebox://">🎙️ shoebox:// (Voice Memos)</a>
+  <a href="shoebox://record">🎙️ shoebox://record</a>
+  <a href="com.apple.MobileAddressBook://">👥 com.apple.MobileAddressBook://</a>
+  <a href="prefs:root=General&path=About">⚙️ prefs:// (Deprecated)</a>
+  <a href="app-prefs:root=Bluetooth">📶 app-prefs://Bluetooth</a>
 
-    async function tryWasm() {
-      log("Attempting WASM memory test");
-      // Minimal WASM module that has a memory export
-      const wasmCode = new Uint8Array([
-        0x00,0x61,0x73,0x6d, // "\0asm" magic
-        0x01,0x00,0x00,0x00, // version 1
-        // Type section
-        0x01,0x07,0x01,0x60,0x00,0x00,
-        // Memory section
-        0x05,0x03,0x01,0x00,0x10,  // 1 memory, min 0, max 16 pages (~1MB)
-        // Export section
-        0x07,0x07,0x01,0x02,0x6d,0x65,0x6d,0x02,0x00,
-        // Code section
-        0x0a,0x04,0x01,0x02,0x00,0x0b
-      ]);
-      try {
-        const {instance} = await WebAssembly.instantiate(wasmCode);
-        log("WASM instantiated");
-        const mem = instance.exports.mem;
-        const u8 = new Uint8Array(mem.buffer);
-        // Attempt OOB via WASM backing buffer
-        const idx = u8.length + 100; 
-        u8[idx] = 99;
-        log("WASM OOB write attempted without exception");
-      } catch (e) {
-        log("Caught WASM error: " + e.message);
-      }
-    }
+  <!-- App Store -->
+  <a href="itms-apps://itunes.apple.com">🛒 itms-apps:// (App Store)</a>
 
-    window.onload = function() {
-      log("Loaded test harness");
-      tryJsOob();
-      tryWasm();
-      log("Finished attempts");
-    };
-
-  </script>
+  <!-- Custom edge case test -->
+  <a href="tel://%2B11234567890">📞 tel:// with encoded number</a>
+  <a href="tel://@">📞 tel://@ (edge case)</a>
 </body>
 </html>
-
