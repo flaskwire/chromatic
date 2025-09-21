@@ -42,10 +42,16 @@
   <a href="tel://@">📞 tel://@ (edge case)</a>
 
   <p>Wall</p>
-  <a href="shoebox://pay">shoebox://pay</a>
-  <a href="shoebox://add">shoebox://add</a>
-  <a href="shoebox://randomstring">shoebox://randomstring</a>
-  <a href="shoebox://%00">shoebox://%00 (null byte test)</a>
+<a href="shoebox://?id=1234">shoebox://?id=1234</a>
+<a href="shoebox://record?debug=true">shoebox://record?debug=true</a>
+<a href="shoebox://%2F..%2F..%2Fetc/passwd">shoebox://../etc/passwd</a>
+
+  <a href="shoebox://%2E%2E/">shoebox://%2E%2E/</a>
+<a href="shoebox://%F0%9F%92%B0">shoebox://💰</a>
+
+  <a href="shoebox://wallet">shoebox://wallet</a>
+<a href="shoebox://applepay">shoebox://applepay</a>
+
 
 </body>
 </html>
